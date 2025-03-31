@@ -1,0 +1,26 @@
+{
+    "name": "hanafalah/module-encoding",
+    "autoload": {
+        "psr-4": {
+            "Hanafalah\\ModuleEncoding\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hamzah",
+            "email": "hamzahnafalah@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hanafalah\\ModuleEncoding\\ModuleEncodingServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "hanafalah/laravel-support": "1.x"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
+}
