@@ -1,10 +1,10 @@
 <?php
 
+use Hanafalah\ModuleEncoding\Models\Encoding\Encoding;
+use Hanafalah\ModuleEncoding\Models\Encoding\ModelHasEncoding;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\LaravelSupport\Models\Encoding\Encoding;
-use Hanafalah\LaravelSupport\Models\Encoding\ModelHasEncoding;
 
 return new class extends Migration
 {

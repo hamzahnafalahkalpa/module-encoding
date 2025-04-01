@@ -1,9 +1,9 @@
 <?php
 
+use Hanafalah\ModuleEncoding\Models\Encoding\Encoding;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\LaravelSupport\Models\Encoding\Encoding;
 
 return new class extends Migration
 {

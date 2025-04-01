@@ -31,7 +31,7 @@ trait HasEncoding
                 switch ($part['type']) {
                     case 'alphanumeric': static::alphanumeric($result,$part);break;
                     case 'incrementing': static::incrementing($result,$part);break;                        
-                    case 'date'        : static::formatingDate($result,$part,$model_has_encoding->value);break;                        
+                    case 'date'        : static::formatingDate($result,$part);break;                        
                     default            : throw new \Exception("Unknown type: {$part['type']}");
                 }
             }

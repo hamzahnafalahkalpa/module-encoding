@@ -23,13 +23,21 @@ class Encoding extends PackageManagement implements ContractsEncoding
     ];
 
     protected function viewUsingRelation(): array{
-        return [];
+        return [
+            'modelHasEncoding' => function($query){
+                $is_has_reference = isset(request()->reference_id,request()->reference_type);
+                $query->when($is_has_reference,function($query){
+                    $query->where('reference_id',request()->reference_id)
+                          ->where('reference_type',request()->reference_type);
+                })->when(!$is_has_reference,function($query){
+                    $query->whereRaw('false');
+                });
+            }
+        ];
     }
 
     protected function showUsingRelation(): array{
-        return [
-            'modelHasEncoding'
-        ];
+        return [];
     }
 
     public function getEncoding(): mixed{
@@ -63,9 +71,10 @@ class Encoding extends PackageManagement implements ContractsEncoding
         ],[
             'name' => $encoding_dto->name
         ]);
-
-        if (isset($encoding_dto->modelHasEncoding)){
-            
+        if (isset($encoding_dto->model_has_encoding)){
+            $model_has_encoding = &$encoding_dto->model_has_encoding;
+            $model_has_encoding->encoding_id = $encoding->getKey();
+            $this->schemaContract('model_has_encoding')->prepareStoreModelHasEncoding($model_has_encoding);
         }
         return static::$encoding_model = $encoding;
     }
@@ -113,7 +122,9 @@ class Encoding extends PackageManagement implements ContractsEncoding
 
     public function encoding(mixed $conditionals = null): Builder{
         $this->booting();
-        return $this->EncodingModel()->conditionals($this->mergeCondition($conditionals))->withParameters('or')->orderBy('props->prop_people->name','asc');
+        return $this->EncodingModel()->with($this->viewUsingRelation())
+                    ->conditionals($this->mergeCondition($conditionals))
+                    ->withParameters();
     }
 }
 
