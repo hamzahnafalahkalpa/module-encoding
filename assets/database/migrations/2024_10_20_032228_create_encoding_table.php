@@ -23,7 +23,7 @@ return new class extends Migration
         if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('name')->nullable()->index();
+                $table->string('name',100);
                 $table->string('flag', 45)->nullable();
                 $table->timestamps();
             });

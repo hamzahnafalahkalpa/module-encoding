@@ -17,15 +17,7 @@ class ModuleEncodingServiceProvider extends BaseServiceProvider
     {
         $this->registerMainClass(ModuleEncoding::class)
             ->registerCommandService(Providers\CommandServiceProvider::class)
-            ->registers([
-                '*',
-                'Services' => function(){
-                    $this->binds([
-                        Contracts\Schemas\ProfileEmployee::class => Schemas\Employee::class,
-                        Contracts\Schemas\ProfilePhoto::class => Schemas\Employee::class
-                    ]);
-                }
-            ]);
+            ->registers(['*']);
     }
     
 

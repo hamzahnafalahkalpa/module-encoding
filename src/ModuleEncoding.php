@@ -7,7 +7,7 @@ use Hanafalah\LaravelSupport\Supports\PackageManagement;
 class ModuleEncoding extends PackageManagement implements Contracts\ModuleEncoding
 {
     /** @var array */
-    protected $__module_employee_config = [];
+    protected $__module_encoding_config = [];
 
     /**
      * A description of the entire PHP function.
@@ -18,6 +18,6 @@ class ModuleEncoding extends PackageManagement implements Contracts\ModuleEncodi
      */
     public function __construct()
     {
-        $this->setConfig('module-encoding', $this->__module_employee_config);
+        $this->setConfig('module-encoding', $this->__module_encoding_config);
     }
 }
