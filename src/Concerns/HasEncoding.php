@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleEncoding\Concerns\Support;
+namespace Hanafalah\ModuleEncoding\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
