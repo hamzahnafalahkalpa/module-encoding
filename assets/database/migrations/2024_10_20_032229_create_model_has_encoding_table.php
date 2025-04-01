@@ -8,16 +8,14 @@ use Hanafalah\LaravelSupport\Models\Encoding\ModelHasEncoding;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
+
     private $__table;
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->__table = app(config('database.models.ModelHasEncoding', ModelHasEncoding::class));
     }
+
     public function up(): void
     {
         $table_name = $this->__table->getTable();
@@ -30,7 +28,7 @@ return new class extends Migration
                 $table->string('reference_type', 60);
                 $table->string('value')->nullable();
                 $table->foreignIdFor($encoding::class, 'encoding_id')
-                    ->nullable()->cascadeOnUpdate()->restrictOnDelete();
+                      ->nullable()->cascadeOnUpdate()->restrictOnDelete();
                 $table->json('props')->nullable();
                 $table->timestamps();
 
