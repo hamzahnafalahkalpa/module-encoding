@@ -8,7 +8,7 @@ use Hanafalah\ModuleEncoding\Contracts\Data\ModelHasEncodingPropsData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
-class EncodingData extends Data implements DataModelHasEncodingData{
+class ModelHasEncodingData extends Data implements DataModelHasEncodingData{
     public function __construct(
         #[MapInputName('id')]
         #[MapName('id')]
