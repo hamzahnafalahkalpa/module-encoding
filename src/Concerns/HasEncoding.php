@@ -55,7 +55,7 @@ trait HasEncoding
         return app(config('database.models.ModelHasEncoding'))->whereHas("encoding",fn ($query) => $query->flagIn($flag))->first();
     }
 
-    public static function getEncodingData(string $flag): array{
+    public static function getEncodingData(string $flag): ?string{
         return config()->get("module-encoding.encodings.$flag");
     }
 
