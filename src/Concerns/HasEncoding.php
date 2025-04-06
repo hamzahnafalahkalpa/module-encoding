@@ -51,12 +51,12 @@ trait HasEncoding
         return '';
     }
 
-    public static function getEncodingModelByFlag(string $flag): Model{
+    public static function getEncodingModelByFlag(string $flag): ?Model{
         return app(config('database.models.ModelHasEncoding'))->whereHas("encoding",fn ($query) => $query->flagIn($flag))->first();
     }
 
-    public static function getEncodingData(string $flag): ?string{
-        return config()->get("module-encoding.encodings.$flag");
+    public static function getEncodingData(string $flag): ?array{
+        return config()->get("module-encoding.encodings.$flag") ?? null;
     }
 
     
