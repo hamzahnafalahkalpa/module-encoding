@@ -9,31 +9,32 @@ use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Contracts\BaseData;
 
 class StructureData extends Data implements DataStructureData, BaseData{
-    public function __construct(
-        #[MapInputName('type')]
-        #[MapName('type')]
-        public string $type,
+    #[MapInputName('type')]
+    #[MapName('type')]
+    public string $type;
 
-        #[MapInputName('value')]
-        #[MapName('value')]
-        public ?string $value = null,
+    #[MapInputName('value')]
+    #[MapName('value')]
+    public ?string $value = null;
 
-        #[MapInputName('length')]
-        #[MapName('length')]
-        public ?int $length,
+    #[MapInputName('length')]
+    #[MapName('length')]
+    public ?int $length;
 
-        #[MapInputName('resetable')]
-        #[MapName('resetable')]
-        public ?bool $resetable = null,
+    #[MapInputName('resetable')]
+    #[MapName('resetable')]
+    public ?bool $resetable = null;
 
-        #[MapInputName('format')]
-        #[MapName('format')]
-        public ?string $format = null
-    ){
-        if (!isset($this->length)){
-            if (isset($this->value)){
-                $this->length = strlen($this->value);
+    #[MapInputName('format')]
+    #[MapName('format')]
+    public ?string $format = null;
+
+    public static function after(StructureData $data): StructureData{
+        if (!isset($data->length)){
+            if (isset($data->value)){
+                $data->length = strlen($data->value);
             }
         }
+        return $data;
     }
 }

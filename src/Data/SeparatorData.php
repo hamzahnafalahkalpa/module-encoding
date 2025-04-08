@@ -8,13 +8,11 @@ use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
 class SeparatorData extends Data implements DataSeparatorData{
-    public function __construct(
-        #[MapInputName('distance')]
-        #[MapName('distance')]
-        public int $distance,
+    #[MapInputName('distance')]
+    #[MapName('distance')]
+    public int $distance;
 
-        #[MapInputName('separator')]
-        #[MapName('separator')]
-        public ?string $separator = ''
-    ){}
+    #[MapInputName('separator')]
+    #[MapName('separator')]
+    public ?string $separator = '';
 }

@@ -9,21 +9,19 @@ use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
 class EncodingData extends Data implements DataEncodingData{
-    public function __construct(
-        #[MapInputName('id')]
-        #[MapName('id')]
-        public mixed $id = null,
+    #[MapInputName('id')]
+    #[MapName('id')]
+    public mixed $id = null;
 
-        #[MapInputName('name')]
-        #[MapName('name')]
-        public ?string $name = null,
+    #[MapInputName('name')]
+    #[MapName('name')]
+    public ?string $name = null;
 
-        #[MapInputName('flag')]
-        #[MapName('flag')]
-        public string $flag,
+    #[MapInputName('flag')]
+    #[MapName('flag')]
+    public string $flag;
 
-        #[MapInputName('model_has_encoding')]
-        #[MapName('model_has_encoding')]
-        public ?ModelHasEncodingData $model_has_encoding,
-    ){}
+    #[MapInputName('model_has_encoding')]
+    #[MapName('model_has_encoding')]
+    public ?ModelHasEncodingData $model_has_encoding;
 }

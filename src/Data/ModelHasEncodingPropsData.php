@@ -11,16 +11,17 @@ use Spatie\LaravelData\Attributes\MapName;
 
 class ModelHasEncodingPropsData extends Data implements DataModelHasEncodingPropsData{
     use HasRequestData;
+    
+    #[MapInputName('separator')]
+    #[MapName('separator')]
+    public ?SeparatorData $separator = null;
 
-    public function __construct(
-        #[MapInputName('separator')]
-        #[MapName('separator')]
-        public ?SeparatorData $separator = null,
+    #[MapInputName('structure')]
+    #[MapName('structure')]
+    public array $structure;
 
-        #[MapInputName('structure')]
-        #[MapName('structure')]
-        public array $structure,
-    ){
-        $this->structure = array_map(fn ($item) => $this->requestDTO(StructureData::class,$item), $structure);
+    public static function after(ModelHasEncodingPropsData $data): ModelHasEncodingPropsData{
+        $data->structure = array_map(fn ($item) => self::requestDTO(StructureData::class,$item), $data->structure);
+        return $data;
     }
 }
