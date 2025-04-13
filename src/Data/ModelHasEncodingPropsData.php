@@ -21,7 +21,8 @@ class ModelHasEncodingPropsData extends Data implements DataModelHasEncodingProp
     public array $structure;
 
     public static function after(ModelHasEncodingPropsData $data): ModelHasEncodingPropsData{
-        $data->structure = array_map(fn ($item) => self::requestDTO(StructureData::class,$item), $data->structure);
+        $new = static::new();
+        $data->structure = array_map(fn ($item) => $new->requestDTO(StructureData::class,$item), $data->structure);
         return $data;
     }
 }
