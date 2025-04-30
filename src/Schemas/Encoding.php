@@ -3,7 +3,7 @@
 namespace Hanafalah\ModuleEncoding\Schemas;
 
 use Illuminate\Database\Eloquent\{
-    Builder, Collection, Model
+    Model
 };
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleEncoding\Contracts\Data\EncodingData;
@@ -22,49 +22,6 @@ class Encoding extends PackageManagement implements ContractsEncoding
         ]
     ];
 
-    protected function viewUsingRelation(): array{
-        return [
-            'modelHasEncoding' => function($query){
-                $is_has_reference = isset(request()->reference_id,request()->reference_type);
-                $query->when($is_has_reference,function($query){
-                    $query->where('reference_id',request()->reference_id)
-                          ->where('reference_type',request()->reference_type);
-                })->when(!$is_has_reference,function($query){
-                    $query->whereRaw('false');
-                });
-            }
-        ];
-    }
-
-    protected function showUsingRelation(): array{
-        return [];
-    }
-
-    public function getEncoding(): mixed{
-        return static::$encoding_model;
-    }
-
-    public function prepareShowEncoding(?Model $model = null, ?array $attributes = null): Model{
-        $attributes ??= request()->all();
-
-        $model ??= $this->getEncoding();
-        if (!isset($model)) {
-            $id   = $attributes['id'] ?? null;
-            if (!isset($id)) throw new \Exception('id is not found');
-
-            $model = $this->encoding()->with($this->showUsingRelation())->findOrFail($id);            
-        } else {
-            $model->load($this->showUsingRelation());
-        }
-        return static::$encoding_model = $model;
-    }    
-
-    public function showEncoding(?Model $model = null): array{
-        return $this->showEntityResource(function() use ($model){
-            return $this->prepareShowEncoding($model);
-        });
-    }
-
     public function prepareStoreEncoding(EncodingData $encoding_dto): Model{
         $encoding = $this->encoding()->updateOrCreate([
             'flag' => $encoding_dto->flag
@@ -79,21 +36,21 @@ class Encoding extends PackageManagement implements ContractsEncoding
         return static::$encoding_model = $encoding;
     }
 
-    public function storeEncoding(? EncodingData $encoding_dto = null): array{
-        return $this->transaction(function () use ($encoding_dto) {
-            return $this->showEncoding($this->prepareStoreEncoding($encoding_dto ?? $this->requestDTO(EncodingData::class)));
-        });
-    }
+    // public function storeEncoding(? EncodingData $encoding_dto = null): array{
+    //     return $this->transaction(function () use ($encoding_dto) {
+    //         return $this->showEncoding($this->prepareStoreEncoding($encoding_dto ?? $this->requestDTO(EncodingData::class)));
+    //     });
+    // }
 
-    public function prepareViewEncodingList(): Collection{
-        return $this->encoding()->with($this->viewUsingRelation())->get();
-    }
+    // public function prepareViewEncodingList(): Collection{
+    //     return $this->encoding()->with($this->viewUsingRelation())->get();
+    // }
 
-    public function viewEncodingList(): array{
-        return $this->viewEntityResource(function(){
-            return $this->prepareViewEncodingList();
-        });
-    }
+    // public function viewEncodingList(): array{
+    //     return $this->viewEntityResource(function(){
+    //         return $this->prepareViewEncodingList();
+    //     });
+    // }
 
     public function prepareDeleteEncoding(? array $attributes = null): bool{
         $attributes ??= request()->all();
@@ -114,17 +71,17 @@ class Encoding extends PackageManagement implements ContractsEncoding
         return $encoding->delete();
     }
 
-    public function deleteEncoding(): bool{
-        return $this->transaction(function(){
-            return $this->prepareDeleteEncoding();
-        });
-    }
+    // public function deleteEncoding(): bool{
+    //     return $this->transaction(function(){
+    //         return $this->prepareDeleteEncoding();
+    //     });
+    // }
 
-    public function encoding(mixed $conditionals = null): Builder{
-        $this->booting();
-        return $this->EncodingModel()->with($this->viewUsingRelation())
-                    ->conditionals($this->mergeCondition($conditionals))
-                    ->withParameters();
-    }
+    // public function encoding(mixed $conditionals = null): Builder{
+    //     $this->booting();
+    //     return $this->EncodingModel()->with($this->viewUsingRelation())
+    //                 ->conditionals($this->mergeCondition($conditionals))
+    //                 ->withParameters();
+    // }
 }
 
