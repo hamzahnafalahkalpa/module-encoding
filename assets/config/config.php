@@ -29,5 +29,6 @@ return [
     ],
     'commands' => [
         ModuleEncodingCommands\InstallMakeCommand::class
-    ]
+    ],
+    'encodings' => []
 ];
