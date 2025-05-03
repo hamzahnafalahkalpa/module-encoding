@@ -7,23 +7,27 @@ use Hanafalah\ModuleEncoding\{
 };
 
 return [
+    'namespace' => 'Hanafalah\\ModuleEmployee',
     'app' => [
         'contracts' => [
-            // ADD YOUR CONTRACTS HERE
-        ],
-    ],
-    'commands' => [
-        ModuleEncodingCommands\InstallMakeCommand::class
+            //ADD YOUR CONTRACTS HERE
+        ]
     ],
     'libs' => [
         'model' => 'Models',
         'contract' => 'Contracts',
         'schema' => 'Schemas',
-        'database' => 'Database'
+        'database' => 'Database',
+        'data' => 'Data',
+        'resource' => 'Resources',
+        'migration' => '../assets/database/migrations'
     ],
     'database' => [
         'models' => [
             // ADD YOUR MODELS HERE
         ]
+    ],
+    'commands' => [
+        ModuleEncodingCommands\InstallMakeCommand::class
     ]
 ];
