@@ -20,7 +20,7 @@ class ViewEncoding extends ApiResource
       'name'                 => $this->name,
       'flag'                 => $this->flag,
       'model_has_encoding'   => $this->relationValidation('modelHasEncoding', function () {
-        return $this->modelHasEncoding->toShowApi();
+        return $this->modelHasEncoding->toShowApi()->resolve();
       }),
       'created_at'           => $this->created_at,
       'updated_at'           => $this->updated_at
