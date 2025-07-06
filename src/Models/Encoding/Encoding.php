@@ -23,6 +23,10 @@ class Encoding extends BaseModel
         ];
     }
 
+    public function showUsingRelation(): array{
+        return $this->mergeArray($this->viewUsingRelation());
+    }
+
     public function getViewResource(){
         return ViewEncoding::class;
     }
