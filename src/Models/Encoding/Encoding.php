@@ -4,9 +4,12 @@ namespace Hanafalah\ModuleEncoding\Models\Encoding;
 
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleEncoding\Resources\Encoding\ViewEncoding;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Encoding extends BaseModel
 {
+    use HasUlids;
+
     public $incrementing = false;
     protected $keyType = 'string';
     protected $primaryKey = 'id';
