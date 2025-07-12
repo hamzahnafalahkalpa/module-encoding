@@ -7,6 +7,9 @@ use Hanafalah\ModuleEncoding\Resources\Encoding\ViewEncoding;
 
 class Encoding extends BaseModel
 {
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
     protected $list = ['id', 'name', 'flag'];    
 
     public function viewUsingRelation(): array{

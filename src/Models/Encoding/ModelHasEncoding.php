@@ -5,11 +5,15 @@ namespace Hanafalah\ModuleEncoding\Models\Encoding;
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleEncoding\Resources\ModelHasEncoding\ViewModelHasEncoding;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasEncoding extends BaseModel
 {
-    use HasProps;
+    use HasProps, HasUlids;
 
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
     protected $list = [
         'id', 'reference_id', 'reference_type', 'encoding_id', 'value', 'props'
     ];
