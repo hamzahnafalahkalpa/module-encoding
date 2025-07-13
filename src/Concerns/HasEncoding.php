@@ -23,9 +23,9 @@ trait HasEncoding
 
     public static function generateCode(string $flag,?bool $is_update = true): string{
         $model_has_encoding = static::getEncodingModelByFlag($flag);
-        if (isset($model_has_encoding,$model_has_encoding->structure)) {
-            $structure       = &$model_has_encoding->structure;
-            $separator       = &$model_has_encoding->separator;
+        if (isset($model_has_encoding) && isset($model_has_encoding->structure)) {
+            $structure       = $model_has_encoding->structure;
+            $separator       = $model_has_encoding->separator;
             $result          = [];
             foreach ($structure as &$part) {
                 switch ($part['type']) {
@@ -52,7 +52,7 @@ trait HasEncoding
     }
 
     public static function getEncodingModelByFlag(string $flag): ?Model{
-        return app(config('database.models.ModelHasEncoding'))->whereHas("encoding",fn ($query) => $query->flagIn($flag))->first();
+        return app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->flagIn($flag))->first();
     }
 
     public static function getEncodingData(string $flag): ?array{
@@ -96,16 +96,15 @@ trait HasEncoding
         $current_date = now()->format($part['format']);
         $result[]     = $current_date;
 
+        $part['value'] = $current_date;
         if (isset($part['resetable'])) {
             static::resetIncrementForNewPeriod($part['resetable'], $part);
         }
-        $part['value'] = $current_date;
     }
 
     protected static function resetIncrementForNewPeriod($resetable, &$part){
         $currentDate   = now();
         $formattedDate = Carbon::createFromFormat($part['format'], $part['value']);
-
         static::$__should_reset = match ($resetable) {
             'year'  => !$currentDate->isSameYear($formattedDate),
             'month' => !$currentDate->isSameMonth($formattedDate),
