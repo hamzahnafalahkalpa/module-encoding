@@ -92,19 +92,19 @@ trait HasEncoding
             'DD-MM-YYYY' => ['dmY', 8],
             'MM-YYYY'    => ['mY', 6]
         ];
-        list($part['format'], $part['length']) = $formatted_maps[$part['format']];
-        $current_date = now()->format($part['format']);
+        list($format, $part['length']) = $formatted_maps[$part['format']];
+        $current_date = now()->format($format);
         $result[]     = $current_date;
 
         $part['value'] = $current_date;
         if (isset($part['resetable'])) {
-            static::resetIncrementForNewPeriod($part['resetable'], $part);
+            static::resetIncrementForNewPeriod($part['resetable'], $format, $part);
         }
     }
 
-    protected static function resetIncrementForNewPeriod($resetable, &$part){
+    protected static function resetIncrementForNewPeriod($resetable, $format, &$part){
         $currentDate   = now();
-        $formattedDate = Carbon::createFromFormat($part['format'], $part['value']);
+        $formattedDate = Carbon::createFromFormat($format, $part['value']);
         static::$__should_reset = match ($resetable) {
             'year'  => !$currentDate->isSameYear($formattedDate),
             'month' => !$currentDate->isSameMonth($formattedDate),
