@@ -12,7 +12,7 @@ use Hanafalah\ModuleEncoding\Contracts\Schemas\Encoding as ContractsEncoding;
 class Encoding extends PackageManagement implements ContractsEncoding
 {
     protected string $__entity = 'Encoding';
-    public static $encoding_model;
+    public $encoding_model;
 
     protected array $__cache = [
         'index' => [
@@ -33,7 +33,7 @@ class Encoding extends PackageManagement implements ContractsEncoding
             $model_has_encoding->encoding_id = $encoding->getKey();
             $this->schemaContract('model_has_encoding')->prepareStoreModelHasEncoding($model_has_encoding);
         }
-        return static::$encoding_model = $encoding;
+        return $this->encoding_model = $encoding;
     }
 
     // public function storeEncoding(? EncodingData $encoding_dto = null): array{

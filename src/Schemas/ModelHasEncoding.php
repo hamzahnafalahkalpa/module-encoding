@@ -12,7 +12,7 @@ use Hanafalah\ModuleEncoding\Contracts\Schemas\ModelHasEncoding as ContractsMode
 class ModelHasEncoding extends PackageManagement implements ContractsModelHasEncoding
 {
     protected string $__entity = 'ModelHasEncoding';
-    public static $model_has_encoding_model;
+    public $model_has_encoding_model;
 
     public function prepareStoreModelHasEncoding(ModelHasEncodingData $model_has_encoding_dto): Model{
         $model = $this->usingEntity()->updateOrCreate([
@@ -24,7 +24,7 @@ class ModelHasEncoding extends PackageManagement implements ContractsModelHasEnc
         ]);
         $this->fillingProps($model,$model_has_encoding_dto->props);
         $model->save();
-        return static::$model_has_encoding_model = $model;
+        return $this->model_has_encoding_model = $model;
     }
 }
 
