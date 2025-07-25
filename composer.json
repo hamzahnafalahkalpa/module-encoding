@@ -19,6 +19,6 @@
         }
     },
     "require": {
-        "hanafalah/laravel-support": "dev-main"
+        "hanafalah/laravel-support": "1.x-dev as 1.0"
     }
 }
