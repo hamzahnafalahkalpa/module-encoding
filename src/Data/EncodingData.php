@@ -2,26 +2,19 @@
 
 namespace Hanafalah\ModuleEncoding\Data;
 
-use Hanafalah\LaravelSupport\Supports\Data;
+use Hanafalah\LaravelSupport\Data\UnicodeData;
 use Hanafalah\ModuleEncoding\Contracts\Data\EncodingData as DataEncodingData;
 use Hanafalah\ModuleEncoding\Contracts\Data\ModelHasEncodingData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
-class EncodingData extends Data implements DataEncodingData{
-    #[MapInputName('id')]
-    #[MapName('id')]
-    public mixed $id = null;
-
-    #[MapInputName('name')]
-    #[MapName('name')]
-    public ?string $name = null;
-
-    #[MapInputName('flag')]
-    #[MapName('flag')]
-    public string $flag;
-
+class EncodingData extends UnicodeData implements DataEncodingData{
     #[MapInputName('model_has_encoding')]
     #[MapName('model_has_encoding')]
     public ?ModelHasEncodingData $model_has_encoding;
+
+    public static function before(array &$attributes){
+        $attributes['flag'] ??= 'Encoding';
+        parent::before($attributes);
+    }
 }

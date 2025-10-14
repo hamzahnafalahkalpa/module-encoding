@@ -2,4 +2,6 @@
 
 namespace Hanafalah\ModuleEncoding\Contracts\Data;
 
-interface EncodingData{}
+use Hanafalah\LaravelSupport\Contracts\Data\UnicodeData;
+
+interface EncodingData extends UnicodeData{}

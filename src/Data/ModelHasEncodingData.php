@@ -15,15 +15,15 @@ class ModelHasEncodingData extends Data implements DataModelHasEncodingData{
 
     #[MapInputName('encoding_id')]
     #[MapName('encoding_id')]
-    public mixed $encoding_id;
+    public mixed $encoding_id = null;
 
     #[MapInputName('reference_id')]
     #[MapName('reference_id')]
-    public string $reference_id;
+    public ?string $reference_id = null;
 
     #[MapInputName('reference_type')]
     #[MapName('reference_type')]
-    public string $reference_type;
+    public ?string $reference_type = null;
 
     #[MapInputName('value')]
     #[MapName('value')]

@@ -2,8 +2,10 @@
 
 namespace Hanafalah\ModuleEncoding\Contracts\Schemas;
 
+use Hanafalah\LaravelSupport\Contracts\Schemas\Unicode;
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\ModuleEncoding\Contracts\Data\EncodingData;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,10 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method LengthAwarePaginator prepareViewEncodingPaginate(PaginateData $paginate_dto)
  * @method array viewEncodingPaginate(?PaginateData $paginate_dto = null)
  * @method array storeEncoding(?EncodingData $Encoding_dto = null)
- * @method Builder encoding(mixed $conditionals = null)
  */
-interface Encoding extends DataManagement
+interface Encoding extends Unicode
 {
     public function prepareStoreEncoding(EncodingData $encoding_dto): Model;
-    public function prepareDeleteEncoding(? array $attributes = null): bool;
+    public function encoding(mixed $conditionals = null): Builder;
 }

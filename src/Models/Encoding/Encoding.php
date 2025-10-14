@@ -2,18 +2,12 @@
 
 namespace Hanafalah\ModuleEncoding\Models\Encoding;
 
-use Hanafalah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\Unicode\Unicode;
 use Hanafalah\ModuleEncoding\Resources\Encoding\ViewEncoding;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
-class Encoding extends BaseModel
+class Encoding extends Unicode
 {
-    use HasUlids;
-
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $primaryKey = 'id';
-    protected $list = ['id', 'name', 'flag'];    
+    protected $table = 'unicodes';
 
     public function viewUsingRelation(): array{
         return [
