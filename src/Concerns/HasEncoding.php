@@ -9,20 +9,20 @@ trait HasEncoding
 {
     private static bool $__should_reset = false;
 
-    public static function hasEncoding(string $flag, ?bool $is_update = true): mixed{
-        $encoding = static::getEncodingData($flag);
+    public static function hasEncoding(string $label, ?bool $is_update = true): mixed{
+        $encoding = static::getEncodingData($label);
         if (isset($encoding)) {
           try {
-            return self::generateCode($encoding['flag'],$is_update);
+            return self::generateCode($encoding['label'],$is_update);
           } catch (\Throwable $th) {
-            throw new \Exception($th->getMessage() . ' : flag ' . $flag . ' di model ' . (new static)->getMorphClass());
+            throw new \Exception($th->getMessage() . ' : label ' . $label . ' di model ' . (new static)->getMorphClass());
           }
         }
         return null;
     }
 
-    public static function generateCode(string $flag,?bool $is_update = true): string{
-        $model_has_encoding = static::getEncodingModelByFlag($flag);
+    public static function generateCode(string $label,?bool $is_update = true): string{
+        $model_has_encoding = static::getEncodingModelByLabel($label);
         if (isset($model_has_encoding) && isset($model_has_encoding->structure)) {
             $structure       = $model_has_encoding->structure;
             $separator       = $model_has_encoding->separator;
@@ -51,12 +51,12 @@ trait HasEncoding
         return '';
     }
 
-    public static function getEncodingModelByFlag(string $flag): ?Model{
-        return app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->flagIn($flag))->first();
+    public static function getEncodingModelByLabel(string $label): ?Model{
+        return app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->where('label',$label))->first();
     }
 
-    public static function getEncodingData(string $flag): ?array{
-        return config()->get("module-encoding.encodings.$flag") ?? null;
+    public static function getEncodingData(string $label): ?array{
+        return config()->get("module-encoding.encodings.$label") ?? null;
     }
 
     
