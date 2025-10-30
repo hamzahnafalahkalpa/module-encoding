@@ -18,7 +18,7 @@ class ViewEncoding extends ApiResource
     $arr = [
       'id'                   => $this->id,
       'name'                 => $this->name,
-      'flag'                 => $this->flag,
+      'label'                 => $this->label,
       'model_has_encoding'   => $this->relationValidation('modelHasEncoding', function () {
         return $this->modelHasEncoding->toShowApi()->resolve();
       }),
