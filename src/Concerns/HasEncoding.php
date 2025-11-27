@@ -39,7 +39,7 @@ trait HasEncoding
             $distance    = $separator['distance'] ?? 0;
             foreach ($result as $key => $result_data) {
                 if ($distance > 0) {
-                    if ($key > 0 && $key % $distance == 0) $finalResult .= $separator;
+                    if ($key > 0 && $key % $distance == 0) $finalResult .= $separator['separator'];
                 }
                 $finalResult .= $result_data;
             }
