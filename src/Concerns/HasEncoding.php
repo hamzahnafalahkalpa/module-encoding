@@ -45,14 +45,17 @@ trait HasEncoding
             }
             $model_has_encoding->value = $finalResult;
             $model_has_encoding->setAttribute('structure', $structure);
-            if ($is_update) $model_has_encoding->save();
+            if ($is_update) {
+                $model_has_encoding->save();
+                config(['model-encoding.cache_model.'.$label => $model_has_encoding]);
+            }
             return $finalResult;
         }
         return '';
     }
 
     public static function getEncodingModelByLabel(string $label): ?Model{
-        return app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->where('label',$label))->first();
+        return config('model-encoding.cache_model.'.$label,null) ?? app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->where('label',$label))->first();
     }
 
     public static function getEncodingData(string $label): ?array{
