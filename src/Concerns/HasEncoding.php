@@ -3,10 +3,13 @@
 namespace Hanafalah\ModuleEncoding\Concerns;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use Hanafalah\LaravelSupport\Concerns\Support\HasCache;
+use Hanafalah\LaravelSupport\Facades\SupportCache;
 
 trait HasEncoding
 {
+    use HasCache;
+
     private static bool $__should_reset = false;
 
     public static function hasEncoding(string $label, ?bool $is_update = true): mixed{
@@ -22,7 +25,15 @@ trait HasEncoding
     }
 
     public static function generateCode(string $label,?bool $is_update = true): string{
-        $model_has_encoding = static::getEncodingModelByLabel($label);
+        $encoding_cache = config('laravel-support.encoding_cache_data');
+        $encoding_id =  SupportCache::getSavedCache('encoding_config')[$label] ?? null;
+        if (!isset($encoding_id)) return '';
+        $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs');
+        $find_encoding_idx = array_search($encoding_id, $model_has_encoding_caches['model_has_encoding_ids']);
+        if (!is_numeric($find_encoding_idx)) return '';
+
+        $model_has_encodings = &$model_has_encoding_caches['model_has_encodings'];
+        $model_has_encoding = &$model_has_encodings[$find_encoding_idx];
         if (isset($model_has_encoding) && isset($model_has_encoding->structure)) {
             $structure       = $model_has_encoding->structure;
             $separator       = $model_has_encoding->separator;
@@ -45,18 +56,15 @@ trait HasEncoding
             }
             $model_has_encoding->value = $finalResult;
             $model_has_encoding->setAttribute('structure', $structure);
-            if ($is_update) {
-                $model_has_encoding->save();
-                config(['model-encoding.cache_model.'.$label => $model_has_encoding]);
-            }
+            SupportCache::saveCache('model_has_encoding_configs', $model_has_encoding_caches);
             return $finalResult;
         }
         return '';
     }
 
-    public static function getEncodingModelByLabel(string $label): ?Model{
-        return config('model-encoding.cache_model.'.$label,null) ?? app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->where('label',$label))->first();
-    }
+    // public static function getEncodingModelByLabel(string $label): ?Model{
+    //     return config('model-encoding.cache_model.'.$label,null) ?? app(config('database.models.ModelHasEncoding'))->with('encoding')->whereHas("encoding",fn ($query) => $query->where('label',$label))->first();
+    // }
 
     public static function getEncodingData(string $label): ?array{
         return config()->get("module-encoding.encodings.$label") ?? null;
