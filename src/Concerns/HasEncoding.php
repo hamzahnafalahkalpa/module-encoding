@@ -25,7 +25,6 @@ trait HasEncoding
     }
 
     public static function generateCode(string $label,?bool $is_update = true): string{
-        $encoding_cache = config('laravel-support.encoding_cache_data');
         $encoding_id =  SupportCache::getSavedCache('encoding_config')[$label] ?? null;
         if (!isset($encoding_id)) return '';
         $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs');
