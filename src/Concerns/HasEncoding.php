@@ -25,9 +25,10 @@ trait HasEncoding
     }
 
     public static function generateCode(string $label,?bool $is_update = true): string{
-        $encoding_id =  SupportCache::getSavedCache('encoding_config')[$label] ?? null;
+        $tenant = tenancy()->tenant;
+        $encoding_id = SupportCache::getSavedCache('encoding_config_'.$tenant->id)[$label] ?? null;
         if (!isset($encoding_id)) return '';
-        $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs');
+        $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs_'.$tenant->id);
         $find_encoding_idx = array_search($encoding_id, $model_has_encoding_caches['model_has_encoding_ids']);
         if (!is_numeric($find_encoding_idx)) return '';
 
@@ -55,7 +56,7 @@ trait HasEncoding
             }
             $model_has_encoding->value = $finalResult;
             $model_has_encoding->setAttribute('structure', $structure);
-            SupportCache::saveCache('model_has_encoding_configs', $model_has_encoding_caches);
+            SupportCache::saveCache('model_has_encoding_configs_'.$tenant->id, $model_has_encoding_caches);
             return $finalResult;
         }
         return '';

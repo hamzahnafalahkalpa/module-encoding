@@ -7,7 +7,7 @@ use Hanafalah\ModuleEncoding\{
 };
 
 return [
-    'namespace' => 'Hanafalah\\ModuleEmployee',
+    'namespace' => 'Hanafalah\\ModuleEncoding',
     'app' => [
         'contracts' => [
             //ADD YOUR CONTRACTS HERE
