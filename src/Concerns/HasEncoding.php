@@ -25,10 +25,9 @@ trait HasEncoding
     }
 
     public static function generateCode(string $label,?bool $is_update = true): string{
-        $tenant = tenancy()->tenant;
-        $encoding_id = SupportCache::getSavedCache('encoding_config_'.$tenant->id)[$label] ?? null;
+        $encoding_id = SupportCache::getSavedCache('encoding_config')[$label] ?? null;
         if (!isset($encoding_id)) return '';
-        $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs_'.$tenant->id);
+        $model_has_encoding_caches = SupportCache::getSavedCache('model_has_encoding_configs');
         $find_encoding_idx = array_search($encoding_id, $model_has_encoding_caches['model_has_encoding_ids']);
         if (!is_numeric($find_encoding_idx)) return '';
 
@@ -56,7 +55,7 @@ trait HasEncoding
             }
             $model_has_encoding->value = $finalResult;
             $model_has_encoding->setAttribute('structure', $structure);
-            SupportCache::saveCache('model_has_encoding_configs_'.$tenant->id, $model_has_encoding_caches);
+            SupportCache::saveCache('model_has_encoding_configs', $model_has_encoding_caches);
             return $finalResult;
         }
         return '';
@@ -98,10 +97,14 @@ trait HasEncoding
         $part['format'] ??= 'YYYY-MM-DD';
         $formatted_maps = [
             'YYYY'       => ['Y', 4],
-            'YYYY-MM'    => ['Ym', 6],
-            'YYYY-MM-DD' => ['Ymd', 8],
-            'DD-MM-YYYY' => ['dmY', 8],
-            'MM-YYYY'    => ['mY', 6]
+            'YY'         => ['y', 2],
+            'MM'         => ['m', 2],
+            'DD'         => ['d', 2],
+            'YYYYMM'     => ['Ym', 6],
+            'YYYYMMDD'   => ['Ymd', 8],
+            'YYMMDD'     => ['ymd', 6],
+            'DDMMYYYY'   => ['dmY', 8],
+            'MMYYYY'     => ['mY', 6],
         ];
         list($format, $part['length']) = $formatted_maps[$part['format']];
         $current_date = now()->format($format);
